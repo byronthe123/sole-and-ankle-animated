@@ -12,31 +12,41 @@ import VisuallyHidden from '../VisuallyHidden';
 const MobileMenu = ({ isOpen, onDismiss }) => {
   return (
     <Overlay isOpen={isOpen} onDismiss={onDismiss}>
-      <Content aria-label="Menu">
-        <CloseButton onClick={onDismiss}>
-          <Icon id="close" />
-          <VisuallyHidden>Dismiss menu</VisuallyHidden>
-        </CloseButton>
-        <Filler />
-        <Nav>
-          <NavLink href="/sale">Sale</NavLink>
-          <NavLink href="/new">New&nbsp;Releases</NavLink>
-          <NavLink href="/men">Men</NavLink>
-          <NavLink href="/women">Women</NavLink>
-          <NavLink href="/kids">Kids</NavLink>
-          <NavLink href="/collections">Collections</NavLink>
-        </Nav>
-        <Footer>
-          <SubLink href="/terms">Terms and Conditions</SubLink>
-          <SubLink href="/privacy">Privacy Policy</SubLink>
-          <SubLink href="/contact">Contact Us</SubLink>
-        </Footer>
-      </Content>
+      <ContentContainer aria-label="Menu">
+        <Content>
+            <CloseButton onClick={onDismiss}>
+            <Icon id="close" />
+            <VisuallyHidden>Dismiss menu</VisuallyHidden>
+            </CloseButton>
+            <Filler />
+            <Nav>
+            <NavLink href="/sale">Sale</NavLink>
+            <NavLink href="/new">New&nbsp;Releases</NavLink>
+            <NavLink href="/men">Men</NavLink>
+            <NavLink href="/women">Women</NavLink>
+            <NavLink href="/kids">Kids</NavLink>
+            <NavLink href="/collections">Collections</NavLink>
+            </Nav>
+            <Footer>
+            <SubLink href="/terms">Terms and Conditions</SubLink>
+            <SubLink href="/privacy">Privacy Policy</SubLink>
+            <SubLink href="/contact">Contact Us</SubLink>
+            </Footer>
+        </Content>
+      </ContentContainer>
     </Overlay>
   );
 };
 
 const Overlay = styled(DialogOverlay)`
+    @keyframes fade {
+        from {
+            opacity: 0%;
+        }
+        to {
+            opacity: 100%;
+        }
+    }
   position: fixed;
   top: 0;
   left: 0;
@@ -45,6 +55,22 @@ const Overlay = styled(DialogOverlay)`
   background: var(--color-backdrop);
   display: flex;
   justify-content: flex-end;
+  /* transition: ${p => p.isOpen ? '0ms' : '300ms'} */
+  animation: fade 300ms;
+`;
+
+const ContentContainer = styled(DialogContent)`
+  background: white;
+  @keyframes slide {
+    from {
+        transform: translateX(150%);
+    }
+    to {
+        transform: translateX(0%);
+    }
+  }
+
+  animation: slide 500ms;
 `;
 
 const Content = styled(DialogContent)`
@@ -54,6 +80,7 @@ const Content = styled(DialogContent)`
   padding: 24px 32px;
   display: flex;
   flex-direction: column;
+  animation: fade 1500ms;
 `;
 
 const CloseButton = styled(UnstyledButton)`
